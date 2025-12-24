@@ -7,6 +7,9 @@
 
 import UIKit
 
+// MARK: - Coordinator Protocol
+// Base protocol for all coordinators - handles navigation flow
+
 protocol Coordinator: AnyObject {
     var navigationController: UINavigationController { get }
     var childCoordinators: [Coordinator] { get set }
@@ -15,6 +18,8 @@ protocol Coordinator: AnyObject {
     func start()
     func childDidFinish(_ child: Coordinator)
 }
+
+// MARK: - Default Implementation
 
 extension Coordinator {
     func childDidFinish(_ child: Coordinator) {

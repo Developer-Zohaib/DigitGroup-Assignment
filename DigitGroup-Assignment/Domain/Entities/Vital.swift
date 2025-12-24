@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Health vital measurement with status indicator
 struct Vital: Equatable, Identifiable {
     let id: String
     let type: VitalType
@@ -17,18 +18,14 @@ struct Vital: Equatable, Identifiable {
     
     var formattedValue: String {
         switch type {
-        case .bloodPressure:
-            return value.formatted()
-        case .heartRate, .respiratoryRate:
-            return "\(Int(value))"
-        case .temperature:
-            return String(format: "%.1f", value)
-        case .oxygenLevel:
-            return "\(Int(value))"
+        case .bloodPressure: return value.formatted()
+        case .heartRate, .respiratoryRate, .oxygenLevel: return "\(Int(value))"
+        case .temperature: return String(format: "%.1f", value)
         }
     }
 }
 
+/// Supported vital sign types with units and normal ranges
 enum VitalType: String, CaseIterable, Equatable {
     case heartRate = "Heart Rate"
     case bloodPressure = "Blood Pressure"
@@ -57,6 +54,7 @@ enum VitalType: String, CaseIterable, Equatable {
     }
 }
 
+/// Health status based on normal range comparison
 enum VitalStatus: String, Equatable {
     case normal = "Normal"
     case elevated = "Elevated"
@@ -65,23 +63,18 @@ enum VitalStatus: String, Equatable {
     
     static func status(for value: Double, type: VitalType) -> VitalStatus {
         let range = type.normalRange
-        if range.contains(value) {
-            return .normal
-        } else if value < range.lowerBound {
-            return value < range.lowerBound * 0.8 ? .critical : .low
-        } else {
-            return value > range.upperBound * 1.2 ? .critical : .elevated
-        }
+        if range.contains(value) { return .normal }
+        if value < range.lowerBound { return value < range.lowerBound * 0.8 ? .critical : .low }
+        return value > range.upperBound * 1.2 ? .critical : .elevated
     }
 }
 
+/// Blood pressure with systolic/diastolic values
 struct BloodPressureVital: Equatable {
     let systolic: Int
     let diastolic: Int
     let recordedAt: Date
     let status: VitalStatus
     
-    var formattedValue: String {
-        "\(systolic)/\(diastolic)"
-    }
+    var formattedValue: String { "\(systolic)/\(diastolic)" }
 }

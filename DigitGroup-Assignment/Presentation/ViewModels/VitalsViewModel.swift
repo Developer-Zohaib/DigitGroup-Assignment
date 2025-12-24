@@ -8,6 +8,9 @@
 import Foundation
 import Combine
 
+// MARK: - Vitals ViewModel
+// Handles vitals dashboard display and interactions
+
 protocol VitalsViewModelProtocol: AnyObject {
     var state: CurrentValueSubject<VitalsViewModel.State, Never> { get }
     var navigationEvent: PassthroughSubject<VitalsViewModel.NavigationEvent, Never> { get }
@@ -17,9 +20,8 @@ protocol VitalsViewModelProtocol: AnyObject {
     func didTapAddVital()
 }
 
+/// Manages vitals data and navigation events
 final class VitalsViewModel: VitalsViewModelProtocol {
-    
-    // MARK: - Types
     
     struct VitalItem: Equatable {
         let id: String

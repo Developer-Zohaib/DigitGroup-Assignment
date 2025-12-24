@@ -8,14 +8,16 @@
 import Foundation
 import Combine
 
+// MARK: - Fetch Appointments Use Case
+
 protocol FetchAppointmentsUseCaseProtocol {
     func execute(patientId: String) -> AnyPublisher<[AppointmentEntity], Error>
     func executeUpcoming(patientId: String) -> AnyPublisher<[AppointmentEntity], Error>
     func executePast(patientId: String) -> AnyPublisher<[AppointmentEntity], Error>
 }
 
+/// Fetches appointments with optional filtering (all/upcoming/past)
 final class FetchAppointmentsUseCase: FetchAppointmentsUseCaseProtocol {
-    
     private let repository: AppointmentRepositoryProtocol
     
     init(repository: AppointmentRepositoryProtocol) {
@@ -23,24 +25,26 @@ final class FetchAppointmentsUseCase: FetchAppointmentsUseCaseProtocol {
     }
     
     func execute(patientId: String) -> AnyPublisher<[AppointmentEntity], Error> {
-        return repository.fetchAppointments(for: patientId)
+        repository.fetchAppointments(for: patientId)
     }
     
     func executeUpcoming(patientId: String) -> AnyPublisher<[AppointmentEntity], Error> {
-        return repository.fetchUpcomingAppointments(for: patientId)
+        repository.fetchUpcomingAppointments(for: patientId)
     }
     
     func executePast(patientId: String) -> AnyPublisher<[AppointmentEntity], Error> {
-        return repository.fetchPastAppointments(for: patientId)
+        repository.fetchPastAppointments(for: patientId)
     }
 }
+
+// MARK: - Fetch Appointment Detail Use Case
 
 protocol FetchAppointmentDetailUseCaseProtocol {
     func execute(appointmentId: String) -> AnyPublisher<AppointmentEntity, Error>
 }
 
+/// Fetches single appointment by ID
 final class FetchAppointmentDetailUseCase: FetchAppointmentDetailUseCaseProtocol {
-    
     private let repository: AppointmentRepositoryProtocol
     
     init(repository: AppointmentRepositoryProtocol) {
@@ -48,6 +52,6 @@ final class FetchAppointmentDetailUseCase: FetchAppointmentDetailUseCaseProtocol
     }
     
     func execute(appointmentId: String) -> AnyPublisher<AppointmentEntity, Error> {
-        return repository.fetchAppointment(id: appointmentId)
+        repository.fetchAppointment(id: appointmentId)
     }
 }

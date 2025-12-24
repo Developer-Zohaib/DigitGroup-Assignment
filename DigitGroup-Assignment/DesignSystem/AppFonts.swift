@@ -7,9 +7,10 @@
 
 import UIKit
 
+// MARK: - App Fonts
+// Typography system with Dynamic Type support for accessibility
+
 enum AppFonts {
-    
-    // MARK: - Dynamic Type Support
     
     static func largeTitle(weight: UIFont.Weight = .bold) -> UIFont {
         let font = UIFont.systemFont(ofSize: 34, weight: weight)

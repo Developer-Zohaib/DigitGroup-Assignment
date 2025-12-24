@@ -8,6 +8,9 @@
 import Foundation
 import Combine
 
+// MARK: - Appointments ViewModel
+// Handles appointments list with upcoming/past filtering
+
 protocol AppointmentsViewModelProtocol: AnyObject {
     var state: CurrentValueSubject<AppointmentsViewModel.State, Never> { get }
     var navigationEvent: PassthroughSubject<AppointmentsViewModel.NavigationEvent, Never> { get }
@@ -18,9 +21,8 @@ protocol AppointmentsViewModelProtocol: AnyObject {
     func didTapAddAppointment()
 }
 
+/// Manages appointments data, filtering, and navigation
 final class AppointmentsViewModel: AppointmentsViewModelProtocol {
-    
-    // MARK: - Types
     
     enum Segment: Int {
         case upcoming = 0

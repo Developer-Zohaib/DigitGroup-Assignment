@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Core patient entity - contains all patient-related data
 struct Patient: Equatable {
     let id: String
     let firstName: String
@@ -19,15 +20,11 @@ struct Patient: Equatable {
     let medicalInfo: MedicalInfo
     let administrativeInfo: AdministrativeInfo
     
-    var fullName: String {
-        "\(firstName) \(lastName)"
-    }
-    
-    var age: Int {
-        Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 0
-    }
+    var fullName: String { "\(firstName) \(lastName)" }
+    var age: Int { Calendar.current.dateComponents([.year], from: dateOfBirth, to: Date()).year ?? 0 }
 }
 
+/// Blood type classification
 enum BloodType: String, CaseIterable {
     case aPositive = "A+"
     case aNegative = "A-"
@@ -39,6 +36,7 @@ enum BloodType: String, CaseIterable {
     case oNegative = "O-"
 }
 
+/// Patient's medical history and current health info
 struct MedicalInfo: Equatable {
     let allergies: [String]
     let chronicConditions: [String]
@@ -50,6 +48,7 @@ struct Medication: Equatable {
     let dosage: String
 }
 
+/// Insurance and emergency contact details
 struct AdministrativeInfo: Equatable {
     let insurance: Insurance
     let emergencyContact: EmergencyContact

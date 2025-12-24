@@ -8,8 +8,8 @@
 import UIKit
 import Combine
 
+/// Root coordinator - sets up tab bar and child coordinators
 final class AppCoordinator: Coordinator {
-    
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     weak var parentCoordinator: Coordinator?
@@ -26,6 +26,7 @@ final class AppCoordinator: Coordinator {
         showMainTabBar()
     }
     
+    /// Creates tab bar with Profile, Appointments, and Vitals tabs
     private func showMainTabBar() {
         let tabBarController = UITabBarController()
         

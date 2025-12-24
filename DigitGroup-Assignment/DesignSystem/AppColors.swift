@@ -7,6 +7,9 @@
 
 import UIKit
 
+// MARK: - App Colors
+// Centralized color palette with Dark Mode support
+
 enum AppColors {
     static let primary = UIColor(red: 33/255, green: 150/255, blue: 243/255, alpha: 1.0)
     static let secondary = UIColor(red: 156/255, green: 39/255, blue: 176/255, alpha: 1.0)

@@ -8,6 +8,9 @@
 import Foundation
 import Combine
 
+// MARK: - Patient Profile ViewModel
+// Handles profile screen state and user interactions
+
 protocol PatientProfileViewModelProtocol: AnyObject {
     var state: CurrentValueSubject<PatientProfileViewModel.State, Never> { get }
     var navigationEvent: PassthroughSubject<PatientProfileViewModel.NavigationEvent, Never> { get }
@@ -22,9 +25,8 @@ protocol PatientProfileViewModelProtocol: AnyObject {
     func didTapEmergencyContact()
 }
 
+/// Manages patient profile data and navigation events
 final class PatientProfileViewModel: PatientProfileViewModelProtocol {
-    
-    // MARK: - State
     
     enum State: Equatable {
         case idle

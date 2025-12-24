@@ -8,8 +8,8 @@
 import Foundation
 import Combine
 
+/// Appointment repository with filtering and sorting logic
 final class AppointmentRepository: AppointmentRepositoryProtocol {
-    
     private let dataSource: AppointmentDataSourceProtocol
     
     init(dataSource: AppointmentDataSourceProtocol) {
@@ -17,28 +17,24 @@ final class AppointmentRepository: AppointmentRepositoryProtocol {
     }
     
     func fetchAppointments(for patientId: String) -> AnyPublisher<[AppointmentEntity], Error> {
-        return dataSource.fetchAppointments(for: patientId)
+        dataSource.fetchAppointments(for: patientId)
     }
     
+    /// Returns upcoming appointments sorted by date (earliest first)
     func fetchUpcomingAppointments(for patientId: String) -> AnyPublisher<[AppointmentEntity], Error> {
-        return dataSource.fetchAppointments(for: patientId)
-            .map { appointments in
-                appointments.filter { $0.isUpcoming }
-                    .sorted { $0.scheduledDate < $1.scheduledDate }
-            }
+        dataSource.fetchAppointments(for: patientId)
+            .map { $0.filter { $0.isUpcoming }.sorted { $0.scheduledDate < $1.scheduledDate } }
             .eraseToAnyPublisher()
     }
     
+    /// Returns past appointments sorted by date (most recent first)
     func fetchPastAppointments(for patientId: String) -> AnyPublisher<[AppointmentEntity], Error> {
-        return dataSource.fetchAppointments(for: patientId)
-            .map { appointments in
-                appointments.filter { $0.isPast }
-                    .sorted { $0.scheduledDate > $1.scheduledDate }
-            }
+        dataSource.fetchAppointments(for: patientId)
+            .map { $0.filter { $0.isPast }.sorted { $0.scheduledDate > $1.scheduledDate } }
             .eraseToAnyPublisher()
     }
     
     func fetchAppointment(id: String) -> AnyPublisher<AppointmentEntity, Error> {
-        return dataSource.fetchAppointment(id: id)
+        dataSource.fetchAppointment(id: id)
     }
 }

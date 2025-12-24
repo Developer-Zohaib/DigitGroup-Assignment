@@ -7,7 +7,11 @@
 
 import UIKit
 
+// MARK: - Layout Constants
+// Centralized spacing, padding, and sizing values
+
 enum Layout {
+    /// Standard spacing values
     enum Spacing {
         static let xs: CGFloat = 4
         static let sm: CGFloat = 8

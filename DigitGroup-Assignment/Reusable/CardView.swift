@@ -7,8 +7,8 @@
 
 import UIKit
 
+/// Reusable card container with shadow and rounded corners
 class CardView: UIView {
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()

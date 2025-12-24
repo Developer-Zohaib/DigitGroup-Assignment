@@ -8,8 +8,8 @@
 import Foundation
 import Combine
 
+/// Vital repository with filtering for latest readings and history
 final class VitalRepository: VitalRepositoryProtocol {
-    
     private let dataSource: VitalDataSourceProtocol
     
     init(dataSource: VitalDataSourceProtocol) {
@@ -17,33 +17,29 @@ final class VitalRepository: VitalRepositoryProtocol {
     }
     
     func fetchVitals(for patientId: String) -> AnyPublisher<[Vital], Error> {
-        return dataSource.fetchVitals(for: patientId)
+        dataSource.fetchVitals(for: patientId)
     }
     
+    /// Returns only the most recent reading for each vital type
     func fetchLatestVitals(for patientId: String) -> AnyPublisher<[Vital], Error> {
-        return dataSource.fetchVitals(for: patientId)
+        dataSource.fetchVitals(for: patientId)
             .map { vitals in
                 var latestByType: [VitalType: Vital] = [:]
                 for vital in vitals {
-                    if let existing = latestByType[vital.type] {
-                        if vital.recordedAt > existing.recordedAt {
-                            latestByType[vital.type] = vital
-                        }
-                    } else {
-                        latestByType[vital.type] = vital
+                    if let existing = latestByType[vital.type], vital.recordedAt <= existing.recordedAt {
+                        continue
                     }
+                    latestByType[vital.type] = vital
                 }
                 return Array(latestByType.values)
             }
             .eraseToAnyPublisher()
     }
     
+    /// Returns history for a specific vital type, sorted by date
     func fetchVitalHistory(for patientId: String, type: VitalType) -> AnyPublisher<[Vital], Error> {
-        return dataSource.fetchVitals(for: patientId)
-            .map { vitals in
-                vitals.filter { $0.type == type }
-                    .sorted { $0.recordedAt > $1.recordedAt }
-            }
+        dataSource.fetchVitals(for: patientId)
+            .map { $0.filter { $0.type == type }.sorted { $0.recordedAt > $1.recordedAt } }
             .eraseToAnyPublisher()
     }
 }

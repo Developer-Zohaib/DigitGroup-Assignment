@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Appointment entity with scheduling and location details
 struct AppointmentEntity: Equatable, Identifiable {
     let id: String
     let doctorName: String
@@ -17,44 +18,29 @@ struct AppointmentEntity: Equatable, Identifiable {
     let location: AppointmentLocation
     let status: AppointmentStatus
     
-    var isUpcoming: Bool {
-        scheduledDate > Date()
-    }
-    
-    var isPast: Bool {
-        scheduledDate <= Date()
-    }
-    
-    var isToday: Bool {
-        Calendar.current.isDateInToday(scheduledDate)
-    }
-    
-    var isThisWeek: Bool {
-        Calendar.current.isDate(scheduledDate, equalTo: Date(), toGranularity: .weekOfYear)
-    }
+    // Computed date checks for filtering
+    var isUpcoming: Bool { scheduledDate > Date() }
+    var isPast: Bool { scheduledDate <= Date() }
+    var isToday: Bool { Calendar.current.isDateInToday(scheduledDate) }
+    var isThisWeek: Bool { Calendar.current.isDate(scheduledDate, equalTo: Date(), toGranularity: .weekOfYear) }
 }
 
+/// Video, in-person, or phone appointment
 enum AppointmentType: String, Equatable {
     case video = "Video Consultation"
     case inPerson = "In-Person"
     case phone = "Phone Call"
     
-    var isVideo: Bool {
-        self == .video
-    }
+    var isVideo: Bool { self == .video }
 }
 
+/// Location with optional coordinates for map display
 struct AppointmentLocation: Equatable {
     let name: String
     let address: String?
     let coordinates: Coordinates?
     
-    var displayText: String {
-        if let address = address {
-            return "\(name), \(address)"
-        }
-        return name
-    }
+    var displayText: String { address.map { "\(name), \($0)" } ?? name }
 }
 
 struct Coordinates: Equatable {
@@ -62,11 +48,7 @@ struct Coordinates: Equatable {
     let longitude: Double
 }
 
+/// Appointment lifecycle status
 enum AppointmentStatus: String, Equatable {
-    case scheduled
-    case confirmed
-    case inProgress
-    case completed
-    case cancelled
-    case noShow
+    case scheduled, confirmed, inProgress, completed, cancelled, noShow
 }

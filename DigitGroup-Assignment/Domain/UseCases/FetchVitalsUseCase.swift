@@ -8,13 +8,15 @@
 import Foundation
 import Combine
 
+// MARK: - Fetch Vitals Use Case
+
 protocol FetchVitalsUseCaseProtocol {
     func execute(patientId: String) -> AnyPublisher<[Vital], Error>
     func executeLatest(patientId: String) -> AnyPublisher<[Vital], Error>
 }
 
+/// Fetches patient vitals (all or latest readings)
 final class FetchVitalsUseCase: FetchVitalsUseCaseProtocol {
-    
     private let repository: VitalRepositoryProtocol
     
     init(repository: VitalRepositoryProtocol) {
@@ -22,10 +24,10 @@ final class FetchVitalsUseCase: FetchVitalsUseCaseProtocol {
     }
     
     func execute(patientId: String) -> AnyPublisher<[Vital], Error> {
-        return repository.fetchVitals(for: patientId)
+        repository.fetchVitals(for: patientId)
     }
     
     func executeLatest(patientId: String) -> AnyPublisher<[Vital], Error> {
-        return repository.fetchLatestVitals(for: patientId)
+        repository.fetchLatestVitals(for: patientId)
     }
 }

@@ -8,8 +8,8 @@
 import Foundation
 import Combine
 
+/// Concrete patient repository - delegates to data source
 final class PatientRepository: PatientRepositoryProtocol {
-    
     private let dataSource: PatientDataSourceProtocol
     
     init(dataSource: PatientDataSourceProtocol) {
@@ -17,10 +17,10 @@ final class PatientRepository: PatientRepositoryProtocol {
     }
     
     func fetchPatient(id: String) -> AnyPublisher<Patient, Error> {
-        return dataSource.fetchPatient(id: id)
+        dataSource.fetchPatient(id: id)
     }
     
     func fetchCurrentPatient() -> AnyPublisher<Patient, Error> {
-        return dataSource.fetchCurrentPatient()
+        dataSource.fetchCurrentPatient()
     }
 }

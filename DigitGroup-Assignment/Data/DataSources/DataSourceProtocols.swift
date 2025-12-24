@@ -8,6 +8,9 @@
 import Foundation
 import Combine
 
+// MARK: - Data Source Protocols
+// Abstractions for data fetching - swap Mock with Network implementation
+
 protocol PatientDataSourceProtocol {
     func fetchPatient(id: String) -> AnyPublisher<Patient, Error>
     func fetchCurrentPatient() -> AnyPublisher<Patient, Error>

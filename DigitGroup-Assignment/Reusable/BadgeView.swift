@@ -7,8 +7,8 @@
 
 import UIKit
 
+/// Status badge with customizable colors (e.g., "CONFIRMED", "PENDING")
 class BadgeView: UIView {
-    
     private let label: UILabel = {
         let label = UILabel()
         label.font = AppFonts.caption1(weight: .semibold)

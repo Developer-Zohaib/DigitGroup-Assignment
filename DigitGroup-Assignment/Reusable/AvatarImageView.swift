@@ -7,8 +7,8 @@
 
 import UIKit
 
+/// Circular avatar with optional online status indicator
 class AvatarImageView: UIView {
-    
     private let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill

@@ -8,10 +8,11 @@
 import Foundation
 import Combine
 
+/// Mock patient data for development/testing
 final class MockPatientDataSource: PatientDataSourceProtocol {
     
     func fetchPatient(id: String) -> AnyPublisher<Patient, Error> {
-        return Just(Self.mockPatient)
+        Just(Self.mockPatient)
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }

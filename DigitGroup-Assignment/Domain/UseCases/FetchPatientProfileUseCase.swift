@@ -8,12 +8,14 @@
 import Foundation
 import Combine
 
+// MARK: - Fetch Patient Profile Use Case
+
 protocol FetchPatientProfileUseCaseProtocol {
     func execute() -> AnyPublisher<Patient, Error>
 }
 
+/// Fetches current patient's profile data
 final class FetchPatientProfileUseCase: FetchPatientProfileUseCaseProtocol {
-    
     private let repository: PatientRepositoryProtocol
     
     init(repository: PatientRepositoryProtocol) {
@@ -21,6 +23,6 @@ final class FetchPatientProfileUseCase: FetchPatientProfileUseCaseProtocol {
     }
     
     func execute() -> AnyPublisher<Patient, Error> {
-        return repository.fetchCurrentPatient()
+        repository.fetchCurrentPatient()
     }
 }

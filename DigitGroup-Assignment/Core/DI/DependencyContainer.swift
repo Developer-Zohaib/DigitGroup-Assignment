@@ -7,6 +7,9 @@
 
 import UIKit
 
+// MARK: - Dependency Container
+// Central factory for creating and wiring dependencies
+
 protocol DependencyContainerProtocol {
     func makePatientProfileViewModel() -> PatientProfileViewModel
     func makeAppointmentsViewModel() -> AppointmentsViewModel
@@ -14,10 +17,10 @@ protocol DependencyContainerProtocol {
     func makeVitalsViewModel() -> VitalsViewModel
 }
 
+/// Creates all app dependencies with proper wiring
 final class DependencyContainer: DependencyContainerProtocol {
     
-    // MARK: - Shared Patient ID (in real app, this would come from auth)
-    
+    // In production, this would come from authentication
     private let currentPatientId = "patient-001"
     
     // MARK: - Data Sources (Lazy initialization)
